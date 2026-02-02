@@ -3,9 +3,9 @@
  * Updated: Bố cục đẹp hơn, Year End Party to hơn, nút chỉ icon
  */
 
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { RotateCcw, Sparkles, Trophy } from "lucide-react";
+import { RotateCcw, Sparkles, Trophy, Volume2, VolumeX } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   AlertDialog,
@@ -175,6 +175,126 @@ const useSound = () => {
   return { playClickSound, playFireworkSound, playPrizeMusic };
 };
 
+// Background music hook - creates ambient party atmosphere
+const useBackgroundMusic = () => {
+  const audioContextRef = useRef<AudioContext | null>(null);
+  const oscillatorsRef = useRef<OscillatorNode[]>([]);
+  const gainNodesRef = useRef<GainNode[]>([]);
+  const isPlayingRef = useRef(false);
+
+  const getAudioContext = useCallback(() => {
+    if (!audioContextRef.current) {
+      audioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)();
+    }
+    return audioContextRef.current;
+  }, []);
+
+  const startBackgroundMusic = useCallback(() => {
+    if (isPlayingRef.current) return;
+    
+    const ctx = getAudioContext();
+    if (ctx.state === 'suspended') {
+      ctx.resume();
+    }
+
+    // Clear any existing oscillators
+    oscillatorsRef.current.forEach(osc => {
+      try { osc.stop(); } catch(e) {}
+    });
+    oscillatorsRef.current = [];
+    gainNodesRef.current = [];
+
+    // Create ambient party music with multiple layers
+    // Bass layer - steady rhythm
+    const bassOsc = ctx.createOscillator();
+    const bassGain = ctx.createGain();
+    bassOsc.type = 'sine';
+    bassOsc.frequency.setValueAtTime(65.41, ctx.currentTime); // C2
+    bassGain.gain.setValueAtTime(0.15, ctx.currentTime);
+    bassOsc.connect(bassGain);
+    bassGain.connect(ctx.destination);
+    bassOsc.start();
+    oscillatorsRef.current.push(bassOsc);
+    gainNodesRef.current.push(bassGain);
+
+    // Pad layer - warm atmosphere
+    const padOsc = ctx.createOscillator();
+    const padGain = ctx.createGain();
+    padOsc.type = 'triangle';
+    padOsc.frequency.setValueAtTime(130.81, ctx.currentTime); // C3
+    padGain.gain.setValueAtTime(0.08, ctx.currentTime);
+    padOsc.connect(padGain);
+    padGain.connect(ctx.destination);
+    padOsc.start();
+    oscillatorsRef.current.push(padOsc);
+    gainNodesRef.current.push(padGain);
+
+    // Harmony layer
+    const harmonyOsc = ctx.createOscillator();
+    const harmonyGain = ctx.createGain();
+    harmonyOsc.type = 'sine';
+    harmonyOsc.frequency.setValueAtTime(196, ctx.currentTime); // G3
+    harmonyGain.gain.setValueAtTime(0.06, ctx.currentTime);
+    harmonyOsc.connect(harmonyGain);
+    harmonyGain.connect(ctx.destination);
+    harmonyOsc.start();
+    oscillatorsRef.current.push(harmonyOsc);
+    gainNodesRef.current.push(harmonyGain);
+
+    // High shimmer layer
+    const shimmerOsc = ctx.createOscillator();
+    const shimmerGain = ctx.createGain();
+    shimmerOsc.type = 'sine';
+    shimmerOsc.frequency.setValueAtTime(523.25, ctx.currentTime); // C5
+    shimmerGain.gain.setValueAtTime(0.03, ctx.currentTime);
+    shimmerOsc.connect(shimmerGain);
+    shimmerGain.connect(ctx.destination);
+    shimmerOsc.start();
+    oscillatorsRef.current.push(shimmerOsc);
+    gainNodesRef.current.push(shimmerGain);
+
+    // Add subtle vibrato to create movement
+    const lfo = ctx.createOscillator();
+    const lfoGain = ctx.createGain();
+    lfo.frequency.setValueAtTime(0.5, ctx.currentTime);
+    lfoGain.gain.setValueAtTime(2, ctx.currentTime);
+    lfo.connect(lfoGain);
+    lfoGain.connect(bassOsc.frequency);
+    lfo.start();
+    oscillatorsRef.current.push(lfo);
+
+    isPlayingRef.current = true;
+  }, [getAudioContext]);
+
+  const stopBackgroundMusic = useCallback(() => {
+    oscillatorsRef.current.forEach(osc => {
+      try { osc.stop(); } catch(e) {}
+    });
+    oscillatorsRef.current = [];
+    gainNodesRef.current = [];
+    isPlayingRef.current = false;
+  }, []);
+
+  const toggleBackgroundMusic = useCallback(() => {
+    if (isPlayingRef.current) {
+      stopBackgroundMusic();
+      return false;
+    } else {
+      startBackgroundMusic();
+      return true;
+    }
+  }, [startBackgroundMusic, stopBackgroundMusic]);
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      stopBackgroundMusic();
+    };
+  }, [stopBackgroundMusic]);
+
+  return { toggleBackgroundMusic, isPlaying: () => isPlayingRef.current };
+};
+
 // Firework component
 const Fireworks = ({ show }: { show: boolean }) => {
   if (!show) return null;
@@ -315,7 +435,9 @@ export default function Home() {
   const [flyingNumber, setFlyingNumber] = useState<number | null>(null);
   const [showFireworks, setShowFireworks] = useState(false);
   const [showPrize, setShowPrize] = useState(false);
+  const [isMusicPlaying, setIsMusicPlaying] = useState(false);
   const { playClickSound, playFireworkSound, playPrizeMusic } = useSound();
+  const { toggleBackgroundMusic } = useBackgroundMusic();
 
   const handleNumberClick = useCallback((num: number) => {
     if (selectedNumbers.includes(num)) return;
@@ -351,6 +473,11 @@ export default function Home() {
       setShowFireworks(false);
     }, 7000);
   }, [playPrizeMusic]);
+
+  const handleToggleMusic = useCallback(() => {
+    const playing = toggleBackgroundMusic();
+    setIsMusicPlaying(playing);
+  }, [toggleBackgroundMusic]);
 
   return (
     <div 
@@ -420,6 +547,28 @@ export default function Home() {
           
           {/* Right: Action buttons - ICON ONLY */}
           <div className="flex gap-2">
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button 
+                  onClick={handleToggleMusic}
+                  className={`${
+                    isMusicPlaying 
+                      ? 'bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-400 hover:to-pink-400' 
+                      : 'bg-white/20 border-white/50 hover:bg-white/30'
+                  } text-white shadow-lg w-10 h-10 md:w-12 md:h-12 p-0`}
+                  size="icon"
+                  variant={isMusicPlaying ? "default" : "outline"}
+                >
+                  {isMusicPlaying ? (
+                    <Volume2 className="w-5 h-5 md:w-6 md:h-6" />
+                  ) : (
+                    <VolumeX className="w-5 h-5 md:w-6 md:h-6" />
+                  )}
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>{isMusicPlaying ? 'Tắt Nhạc' : 'Bật Nhạc'}</TooltipContent>
+            </Tooltip>
+
             <Tooltip>
               <TooltipTrigger asChild>
                 <Button 

@@ -175,104 +175,40 @@ const useSound = () => {
   return { playClickSound, playFireworkSound, playPrizeMusic };
 };
 
-// Background music hook - creates ambient party atmosphere
+// Background music hook - uses beat.mp3 file
 const useBackgroundMusic = () => {
-  const audioContextRef = useRef<AudioContext | null>(null);
-  const oscillatorsRef = useRef<OscillatorNode[]>([]);
-  const gainNodesRef = useRef<GainNode[]>([]);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
   const isPlayingRef = useRef(false);
 
-  const getAudioContext = useCallback(() => {
-    if (!audioContextRef.current) {
-      audioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)();
-    }
-    return audioContextRef.current;
+  useEffect(() => {
+    // Create audio element
+    audioRef.current = new Audio('./mp3/beat.mp3');
+    audioRef.current.loop = true;
+    audioRef.current.volume = 0.3; // Set volume to 30%
+    
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+      }
+    };
   }, []);
 
   const startBackgroundMusic = useCallback(() => {
-    if (isPlayingRef.current) return;
-    
-    const ctx = getAudioContext();
-    if (ctx.state === 'suspended') {
-      ctx.resume();
+    if (audioRef.current && !isPlayingRef.current) {
+      audioRef.current.play().catch(err => {
+        console.log('Audio play failed:', err);
+      });
+      isPlayingRef.current = true;
     }
-
-    // Clear any existing oscillators
-    oscillatorsRef.current.forEach(osc => {
-      try { osc.stop(); } catch(e) {}
-    });
-    oscillatorsRef.current = [];
-    gainNodesRef.current = [];
-
-    // Create ambient party music with multiple layers
-    // Bass layer - steady rhythm
-    const bassOsc = ctx.createOscillator();
-    const bassGain = ctx.createGain();
-    bassOsc.type = 'sine';
-    bassOsc.frequency.setValueAtTime(65.41, ctx.currentTime); // C2
-    bassGain.gain.setValueAtTime(0.15, ctx.currentTime);
-    bassOsc.connect(bassGain);
-    bassGain.connect(ctx.destination);
-    bassOsc.start();
-    oscillatorsRef.current.push(bassOsc);
-    gainNodesRef.current.push(bassGain);
-
-    // Pad layer - warm atmosphere
-    const padOsc = ctx.createOscillator();
-    const padGain = ctx.createGain();
-    padOsc.type = 'triangle';
-    padOsc.frequency.setValueAtTime(130.81, ctx.currentTime); // C3
-    padGain.gain.setValueAtTime(0.08, ctx.currentTime);
-    padOsc.connect(padGain);
-    padGain.connect(ctx.destination);
-    padOsc.start();
-    oscillatorsRef.current.push(padOsc);
-    gainNodesRef.current.push(padGain);
-
-    // Harmony layer
-    const harmonyOsc = ctx.createOscillator();
-    const harmonyGain = ctx.createGain();
-    harmonyOsc.type = 'sine';
-    harmonyOsc.frequency.setValueAtTime(196, ctx.currentTime); // G3
-    harmonyGain.gain.setValueAtTime(0.06, ctx.currentTime);
-    harmonyOsc.connect(harmonyGain);
-    harmonyGain.connect(ctx.destination);
-    harmonyOsc.start();
-    oscillatorsRef.current.push(harmonyOsc);
-    gainNodesRef.current.push(harmonyGain);
-
-    // High shimmer layer
-    const shimmerOsc = ctx.createOscillator();
-    const shimmerGain = ctx.createGain();
-    shimmerOsc.type = 'sine';
-    shimmerOsc.frequency.setValueAtTime(523.25, ctx.currentTime); // C5
-    shimmerGain.gain.setValueAtTime(0.03, ctx.currentTime);
-    shimmerOsc.connect(shimmerGain);
-    shimmerGain.connect(ctx.destination);
-    shimmerOsc.start();
-    oscillatorsRef.current.push(shimmerOsc);
-    gainNodesRef.current.push(shimmerGain);
-
-    // Add subtle vibrato to create movement
-    const lfo = ctx.createOscillator();
-    const lfoGain = ctx.createGain();
-    lfo.frequency.setValueAtTime(0.5, ctx.currentTime);
-    lfoGain.gain.setValueAtTime(2, ctx.currentTime);
-    lfo.connect(lfoGain);
-    lfoGain.connect(bassOsc.frequency);
-    lfo.start();
-    oscillatorsRef.current.push(lfo);
-
-    isPlayingRef.current = true;
-  }, [getAudioContext]);
+  }, []);
 
   const stopBackgroundMusic = useCallback(() => {
-    oscillatorsRef.current.forEach(osc => {
-      try { osc.stop(); } catch(e) {}
-    });
-    oscillatorsRef.current = [];
-    gainNodesRef.current = [];
-    isPlayingRef.current = false;
+    if (audioRef.current && isPlayingRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      isPlayingRef.current = false;
+    }
   }, []);
 
   const toggleBackgroundMusic = useCallback(() => {
@@ -284,13 +220,6 @@ const useBackgroundMusic = () => {
       return true;
     }
   }, [startBackgroundMusic, stopBackgroundMusic]);
-
-  // Cleanup on unmount
-  useEffect(() => {
-    return () => {
-      stopBackgroundMusic();
-    };
-  }, [stopBackgroundMusic]);
 
   return { toggleBackgroundMusic, isPlaying: () => isPlayingRef.current };
 };

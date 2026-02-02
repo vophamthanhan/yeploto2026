@@ -16,7 +16,7 @@ export default defineConfig({
     },
   },
   root: path.resolve(import.meta.dirname, "client"),
-  base: "./", // Relative paths for GitHub Pages
+  base: "/yeploto2026/", // GitHub Pages repository path
   build: {
     outDir: path.resolve(import.meta.dirname, "docs"),
     emptyOutDir: true,

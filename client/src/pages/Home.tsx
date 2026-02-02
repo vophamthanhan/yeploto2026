@@ -387,6 +387,11 @@ export default function Home() {
     }, 500);
   }, [selectedNumbers, playClickSound]);
 
+  const handleRemoveNumber = useCallback((num: number) => {
+    playClickSound();
+    setSelectedNumbers(prev => prev.filter(n => n !== num));
+  }, [playClickSound]);
+
   const handleReset = useCallback(() => {
     setSelectedNumbers([]);
     setFlyingNumber(null);
@@ -580,8 +585,9 @@ export default function Home() {
               <div className="flex-1 flex flex-wrap content-start justify-center gap-2 md:gap-3 overflow-y-auto">
                 <AnimatePresence mode="popLayout">
                   {selectedNumbers.map((num, index) => (
-                    <motion.div
+                    <motion.button
                       key={num}
+                      onClick={() => handleRemoveNumber(num)}
                       initial={{ scale: 0, y: 50, opacity: 0 }}
                       animate={{ scale: 1, y: 0, opacity: 1 }}
                       exit={{ scale: 0, opacity: 0 }}
@@ -591,7 +597,9 @@ export default function Home() {
                         damping: 20,
                         delay: index * 0.02 
                       }}
-                      className="w-11 h-11 md:w-14 md:h-14 lg:w-16 lg:h-16 rounded-full flex items-center justify-center flex-shrink-0"
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
+                      className="w-11 h-11 md:w-14 md:h-14 lg:w-16 lg:h-16 rounded-full flex items-center justify-center flex-shrink-0 cursor-pointer"
                       style={{
                         background: "linear-gradient(145deg, #ffd700 0%, #d4a574 50%, #a67c4a 100%)",
                         boxShadow: "0 0 15px rgba(255, 215, 0, 0.5), inset 0 -3px 10px rgba(0,0,0,0.3), inset 0 3px 10px rgba(255,255,255,0.3)"
@@ -603,7 +611,7 @@ export default function Home() {
                       >
                         {num}
                       </span>
-                    </motion.div>
+                    </motion.button>
                   ))}
                 </AnimatePresence>
                 {selectedNumbers.length === 0 && (

@@ -538,11 +538,11 @@ export default function Home() {
             className="h-12 md:h-16 lg:h-20 object-contain"
           />
           
-          {/* Center: Year End Party - LARGE */}
+          {/* Center: Year End Party - EXTRA LARGE */}
           <img 
             src="./images/chu.png" 
             alt="Year End Party" 
-            className="h-16 md:h-24 lg:h-32 object-contain flex-shrink-0"
+            className="h-20 md:h-32 lg:h-40 xl:h-48 object-contain flex-shrink-0"
           />
           
           {/* Right: Action buttons - ICON ONLY */}

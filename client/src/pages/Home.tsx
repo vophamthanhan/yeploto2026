@@ -483,7 +483,7 @@ export default function Home() {
           <img 
             src="./images/chu.png" 
             alt="Year End Party" 
-            className="h-16 md:h-24 lg:h-32 object-contain flex-shrink-0 scale-125"
+            className="h-16 md:h-24 lg:h-32 object-contain flex-shrink-0 scale-150"
           />
           
           {/* Right: Action buttons - ICON ONLY */}

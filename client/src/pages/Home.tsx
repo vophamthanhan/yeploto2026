@@ -186,6 +186,13 @@ const useBackgroundMusic = () => {
     audioRef.current.loop = true;
     audioRef.current.volume = 0.3; // Set volume to 30%
     
+    // Auto play on mount
+    audioRef.current.play().then(() => {
+      isPlayingRef.current = true;
+    }).catch(err => {
+      console.log('Autoplay blocked, user needs to interact first:', err);
+    });
+    
     return () => {
       if (audioRef.current) {
         audioRef.current.pause();
@@ -364,7 +371,7 @@ export default function Home() {
   const [flyingNumber, setFlyingNumber] = useState<number | null>(null);
   const [showFireworks, setShowFireworks] = useState(false);
   const [showPrize, setShowPrize] = useState(false);
-  const [isMusicPlaying, setIsMusicPlaying] = useState(false);
+  const [isMusicPlaying, setIsMusicPlaying] = useState(true); // Start as true for autoplay
   const { playClickSound, playFireworkSound, playPrizeMusic } = useSound();
   const { toggleBackgroundMusic } = useBackgroundMusic();
 

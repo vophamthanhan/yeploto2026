@@ -424,15 +424,22 @@ export default function Home() {
 
   // Handle round switching
   const handleRoundSwitch = useCallback((round: number) => {
-    if (round === currentRound) return;
+    console.log('handleRoundSwitch called with:', round, 'current:', currentRound);
+    if (round === currentRound) {
+      console.log('Same round, skipping');
+      return;
+    }
     
+    console.log('Switching from round', currentRound, 'to round', round);
     playClickSound();
     
     // Save current round's data
     saveRoundToStorage(currentRound, selectedNumbers);
+    console.log('Saved round', currentRound, 'data:', selectedNumbers);
     
     // Load new round's data
     const newRoundNumbers = loadRoundFromStorage(round);
+    console.log('Loaded round', round, 'data:', newRoundNumbers);
     
     setSelectedNumbers(newRoundNumbers);
     setCurrentRound(round);
@@ -509,7 +516,7 @@ export default function Home() {
       </AnimatePresence>
       
       {/* Overlay for better contrast */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/20" />
+      <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/20 pointer-events-none" />
       
       {/* Chùa Cầu Hội An - Left side */}
       <img 
@@ -529,13 +536,13 @@ export default function Home() {
       <img 
         src="./images/longden.png" 
         alt="Đèn lồng" 
-        className="absolute top-0 left-2 w-12 md:w-16 float-animation opacity-90 z-10"
+        className="absolute top-0 left-2 w-12 md:w-16 float-animation opacity-90 z-10 pointer-events-none"
         style={{ animationDelay: "0s" }}
       />
       <img 
         src="./images/longden.png" 
         alt="Đèn lồng" 
-        className="absolute top-0 right-2 w-12 md:w-16 float-animation opacity-90 z-10"
+        className="absolute top-0 right-2 w-12 md:w-16 float-animation opacity-90 z-10 pointer-events-none"
         style={{ animationDelay: "1.5s" }}
       />
       
@@ -554,8 +561,8 @@ export default function Home() {
           <img 
             src="./images/chu.png" 
             alt="Year End Party" 
-            className="h-16 md:h-24 lg:h-32 object-contain flex-shrink-0"
-            style={{ transform: 'scale(2.5)' }}
+            className="h-16 md:h-24 lg:h-32 object-contain flex-shrink-0 pointer-events-none"
+            style={{ transform: 'scale(2.0)', zIndex: 1 }}
           />
           
           {/* Right: Action buttons - ICON ONLY */}
@@ -647,22 +654,32 @@ export default function Home() {
         </header>
 
         {/* Round Selection Buttons */}
-        <div className="flex justify-center gap-2 mt-2">
+        <div className="flex justify-center gap-3 mt-3 mb-2 relative z-[999]" style={{ zIndex: 9999 }}>
           {[1, 2, 3, 4].map((round) => (
-            <Button
+            <button
               key={round}
-              onClick={() => handleRoundSwitch(round)}
+              type="button"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('DIRECT BUTTON CLICKED for round:', round);
+                handleRoundSwitch(round);
+              }}
               className={`
                 ${currentRound === round 
                   ? 'bg-gradient-to-r from-yellow-500 to-amber-500 text-white shadow-lg scale-105' 
-                  : 'bg-white/20 border-white/50 text-white hover:bg-white/30'
+                  : 'bg-white/80 border-2 border-white text-black hover:bg-white'
                 }
-                font-bold text-sm md:text-base px-3 py-2 md:px-4 md:py-2 rounded-lg transition-all duration-200
+                font-bold text-sm md:text-base px-4 py-3 rounded-lg transition-all duration-200 cursor-pointer min-w-[80px] relative
               `}
-              style={{ fontFamily: "var(--font-display)" }}
+              style={{ 
+                fontFamily: "var(--font-display)",
+                zIndex: 9999,
+                position: 'relative'
+              }}
             >
               Vòng {round}
-            </Button>
+            </button>
           ))}
         </div>
 

@@ -366,14 +366,82 @@ const PrizeOverlay = ({ show }: { show: boolean }) => {
   );
 };
 
+// Constants for localStorage keys
+const ROUND_STORAGE_PREFIX = 'loto_round_';
+const CURRENT_ROUND_KEY = 'loto_current_round';
+
+// Helper functions for localStorage
+const saveRoundToStorage = (round: number, numbers: number[]) => {
+  try {
+    localStorage.setItem(`${ROUND_STORAGE_PREFIX}${round}`, JSON.stringify(numbers));
+  } catch (e) {
+    console.error('Failed to save to localStorage:', e);
+  }
+};
+
+const loadRoundFromStorage = (round: number): number[] => {
+  try {
+    const data = localStorage.getItem(`${ROUND_STORAGE_PREFIX}${round}`);
+    return data ? JSON.parse(data) : [];
+  } catch (e) {
+    console.error('Failed to load from localStorage:', e);
+    return [];
+  }
+};
+
+const saveCurrentRound = (round: number) => {
+  try {
+    localStorage.setItem(CURRENT_ROUND_KEY, String(round));
+  } catch (e) {
+    console.error('Failed to save current round:', e);
+  }
+};
+
+const loadCurrentRound = (): number => {
+  try {
+    const round = localStorage.getItem(CURRENT_ROUND_KEY);
+    return round ? parseInt(round, 10) : 1;
+  } catch (e) {
+    console.error('Failed to load current round:', e);
+    return 1;
+  }
+};
+
 export default function Home() {
-  const [selectedNumbers, setSelectedNumbers] = useState<number[]>([]);
+  const [currentRound, setCurrentRound] = useState<number>(() => loadCurrentRound());
+  const [selectedNumbers, setSelectedNumbers] = useState<number[]>(() => loadRoundFromStorage(loadCurrentRound()));
   const [flyingNumber, setFlyingNumber] = useState<number | null>(null);
   const [showFireworks, setShowFireworks] = useState(false);
   const [showPrize, setShowPrize] = useState(false);
   const [isMusicPlaying, setIsMusicPlaying] = useState(true); // Start as true for autoplay
   const { playClickSound, playFireworkSound, playPrizeMusic } = useSound();
   const { toggleBackgroundMusic } = useBackgroundMusic();
+
+  // Save to localStorage whenever selectedNumbers changes
+  useEffect(() => {
+    saveRoundToStorage(currentRound, selectedNumbers);
+  }, [selectedNumbers, currentRound]);
+
+  // Handle round switching
+  const handleRoundSwitch = useCallback((round: number) => {
+    if (round === currentRound) return;
+    
+    playClickSound();
+    
+    // Save current round's data
+    saveRoundToStorage(currentRound, selectedNumbers);
+    
+    // Load new round's data
+    const newRoundNumbers = loadRoundFromStorage(round);
+    setSelectedNumbers(newRoundNumbers);
+    setCurrentRound(round);
+    saveCurrentRound(round);
+    
+    // Reset animations
+    setFlyingNumber(null);
+    setShowFireworks(false);
+    setShowPrize(false);
+  }, [currentRound, selectedNumbers, playClickSound]);
 
   const handleNumberClick = useCallback((num: number) => {
     if (selectedNumbers.includes(num)) return;
@@ -393,11 +461,13 @@ export default function Home() {
   }, [playClickSound]);
 
   const handleReset = useCallback(() => {
+    // Only reset current round
     setSelectedNumbers([]);
+    saveRoundToStorage(currentRound, []);
     setFlyingNumber(null);
     setShowFireworks(false);
     setShowPrize(false);
-  }, []);
+  }, [currentRound]);
 
   const handleFireworks = useCallback(() => {
     playFireworkSound();
@@ -556,7 +626,7 @@ export default function Home() {
                 <AlertDialogHeader>
                   <AlertDialogTitle className="golden-text text-xl">Xác nhận Reset</AlertDialogTitle>
                   <AlertDialogDescription className="text-yellow-100/80">
-                    Bạn có chắc muốn reset lại trò chơi? Tất cả số đã quay sẽ bị xóa.
+                    Bạn có chắc muốn reset lại vòng {currentRound}? Tất cả số đã quay sẽ bị xóa.
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
@@ -575,13 +645,33 @@ export default function Home() {
           </div>
         </header>
 
+        {/* Round Selection Buttons */}
+        <div className="flex justify-center gap-2 mt-2">
+          {[1, 2, 3, 4].map((round) => (
+            <Button
+              key={round}
+              onClick={() => handleRoundSwitch(round)}
+              className={`
+                ${currentRound === round 
+                  ? 'bg-gradient-to-r from-yellow-500 to-amber-500 text-white shadow-lg scale-105' 
+                  : 'bg-white/20 border-white/50 text-white hover:bg-white/30'
+                }
+                font-bold text-sm md:text-base px-3 py-2 md:px-4 md:py-2 rounded-lg transition-all duration-200
+              `}
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              Vòng {round}
+            </Button>
+          ))}
+        </div>
+
         {/* Main Game Area */}
         <div className="flex-1 flex flex-col gap-2 mt-2 min-h-0">
           {/* Winner Board - Numbers that have been drawn */}
           <section className="flex-[2]">
             <div className="winner-board rounded-xl p-3 md:p-4 bg-gradient-to-b from-red-900/95 to-red-950/98 border-2 border-yellow-500/60 shadow-2xl h-full flex flex-col">
               <h2 className="golden-text text-lg md:text-2xl lg:text-3xl font-bold text-center mb-2" style={{ fontFamily: "var(--font-display)" }}>
-                SỐ ĐÃ QUAY ({selectedNumbers.length}/60)
+                VÒNG {currentRound} - SỐ ĐÃ QUAY ({selectedNumbers.length}/60)
               </h2>
               <div className="flex-1 flex flex-wrap content-start justify-center gap-2 md:gap-3 overflow-y-auto">
                 <AnimatePresence mode="popLayout">

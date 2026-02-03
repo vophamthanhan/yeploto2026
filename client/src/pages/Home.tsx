@@ -424,25 +424,15 @@ export default function Home() {
 
   // Handle round switching
   const handleRoundSwitch = useCallback((round: number) => {
-    console.log('handleRoundSwitch called with round:', round, 'currentRound:', currentRound);
-    if (round === currentRound) {
-      console.log('Same round, returning early');
-      return;
-    }
+    if (round === currentRound) return;
     
-    try {
-      playClickSound();
-    } catch (e) {
-      console.error('Error playing click sound:', e);
-    }
+    playClickSound();
     
     // Save current round's data
-    console.log('Saving current round data:', currentRound, selectedNumbers);
     saveRoundToStorage(currentRound, selectedNumbers);
     
     // Load new round's data
     const newRoundNumbers = loadRoundFromStorage(round);
-    console.log('Loading numbers for round', round, ':', newRoundNumbers);
     
     setSelectedNumbers(newRoundNumbers);
     setCurrentRound(round);
@@ -661,10 +651,7 @@ export default function Home() {
           {[1, 2, 3, 4].map((round) => (
             <Button
               key={round}
-              onClick={() => {
-                console.log('Button clicked for round:', round);
-                handleRoundSwitch(round);
-              }}
+              onClick={() => handleRoundSwitch(round)}
               className={`
                 ${currentRound === round 
                   ? 'bg-gradient-to-r from-yellow-500 to-amber-500 text-white shadow-lg scale-105' 

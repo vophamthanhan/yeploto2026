@@ -68,11 +68,11 @@ export default function IntroPage({ onStart }: IntroPageProps) {
           />
         </motion.div>
 
-        {/* Year End Party Title - TO HƠN */}
+        {/* Year End Party Title - TO HƠN 150% */}
         <motion.img 
           src="./images/chu.png" 
           alt="Year End Party" 
-          className="h-28 md:h-40 lg:h-52 object-contain mb-4"
+          className="h-44 md:h-60 lg:h-80 object-contain mb-4"
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.6, delay: 0.2 }}

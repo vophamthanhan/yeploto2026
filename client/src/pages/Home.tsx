@@ -426,16 +426,6 @@ export default function Home() {
     }
   }, [selectedNumbers, currentRound, showIntro]);
 
-  // Handle starting the game from intro
-  const handleStartGame = useCallback(() => {
-    setShowIntro(false);
-  }, []);
-
-  // If showing intro page, render it
-  if (showIntro) {
-    return <IntroPage onStart={handleStartGame} />;
-  }
-
   // Handle round switching
   const handleRoundSwitch = useCallback((round: number) => {
     console.log('handleRoundSwitch called with:', round, 'current:', currentRound);
@@ -511,6 +501,16 @@ export default function Home() {
     const playing = toggleBackgroundMusic();
     setIsMusicPlaying(playing);
   }, [toggleBackgroundMusic]);
+
+  // Handle starting the game from intro
+  const handleStartGame = useCallback(() => {
+    setShowIntro(false);
+  }, []);
+
+  // If showing intro page, render it
+  if (showIntro) {
+    return <IntroPage onStart={handleStartGame} />;
+  }
 
   return (
     <div 

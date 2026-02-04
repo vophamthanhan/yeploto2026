@@ -176,7 +176,7 @@
   
   .loto-ball-number {
     font-family: var(--font-display);
-    font-weight: 700;
+    font-weight: 1000;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   }
   

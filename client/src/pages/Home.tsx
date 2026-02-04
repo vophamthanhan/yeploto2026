@@ -667,8 +667,8 @@ export default function Home() {
           </div>
         </header>
 
-        {/* Round Selection Buttons - Hàng riêng dưới header */}
-        <div className="flex justify-center gap-2 mt-2 relative z-[999]" style={{ zIndex: 9999 }}>
+        {/* Round Selection Buttons - Hàng riêng dưới header, bên phải */}
+        <div className="flex justify-end gap-2 mt-2 pr-3 relative z-[999]" style={{ zIndex: 9999 }}>
           {[1, 2, 3, 4].map((round) => (
             <Tooltip key={round}>
               <TooltipTrigger asChild>

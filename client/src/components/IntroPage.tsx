@@ -106,15 +106,19 @@ export default function IntroPage({ onStart }: IntroPageProps) {
               <ul className="space-y-3 md:space-y-4 text-lg md:text-xl lg:text-2xl" style={{ fontFamily: "var(--font-body)" }}>
                 <li className="flex items-start gap-3">
                   <span className="text-yellow-400 mt-1 text-xl">•</span>
-                  <span>Mỗi người chơi nhận một tờ lô tô có các con số ngẫu nhiên.</span>
+                  <span>Mỗi người chơi nhận một tờ vé có các con số ngẫu nhiên.</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="text-yellow-400 mt-1 text-xl">•</span>
-                  <span>MC sẽ bốc từng con số và đọc to.</span>
+                  <span>MC sẽ quay số lồng cầu và hô lô tô cho người chơi dò trên tờ vé của mình</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="text-yellow-400 mt-1 text-xl">•</span>
-                  <span>Người chơi nào có đủ các số trên một hàng ngang trên tờ lô tô của mình sẽ hô "KINH" và là người chiến thắng.</span>
+                  <span>Người chơi nào có đủ 4 số trên một hàng ngang sẽ nhận được một phần quà đến từ chương trình.</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-yellow-400 mt-1 text-xl">•</span>
+                  <span className="font-semibold text-yellow-300">Lưu ý: Mỗi người chỉ nhận được 1 phần quà</span>
                 </li>
               </ul>
             </div>

@@ -52,11 +52,11 @@ export default function IntroPage({ onStart }: IntroPageProps) {
       />
 
       {/* Main content */}
-      <div className="relative z-20 flex-1 flex flex-col items-center px-4 py-4">
+      <div className="relative z-20 flex-1 flex flex-col items-center px-4 py-4 pb-8">
         
-        {/* Header with logos - nhỏ và lên trên */}
+        {/* Header with logos - TO 2 LẦN */}
         <motion.div 
-          className="flex items-center justify-center gap-4 mb-2"
+          className="flex items-center justify-center gap-4 mb-3"
           initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
@@ -64,23 +64,23 @@ export default function IntroPage({ onStart }: IntroPageProps) {
           <img 
             src="./images/logo.png" 
             alt="Hội An Hoa & Organic" 
-            className="h-8 md:h-10 lg:h-12 object-contain"
+            className="h-16 md:h-20 lg:h-24 object-contain"
           />
         </motion.div>
 
-        {/* Year End Party Title - TO HƠN 150% */}
+        {/* Year End Party Title - TO 2 LẦN */}
         <motion.img 
           src="./images/chu.png" 
           alt="Year End Party" 
-          className="h-44 md:h-60 lg:h-80 object-contain mb-4"
+          className="h-56 md:h-72 lg:h-96 object-contain mb-5"
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.6, delay: 0.2 }}
         />
 
-        {/* Rules Card - TO HƠN và là focus chính */}
+        {/* Rules Card - TO HƠN và là focus chính, cao hơn và cách lề dưới xa hơn */}
         <motion.div 
-          className="w-full max-w-4xl flex-1 flex flex-col"
+          className="w-full max-w-4xl flex-1 flex flex-col mb-8"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}

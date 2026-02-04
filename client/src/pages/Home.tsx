@@ -580,7 +580,7 @@ export default function Home() {
           />
           
           {/* Right: Action buttons - ICON ONLY */}
-          <div className="flex gap-2">
+          <div className="flex gap-2 items-center">
             <Tooltip>
               <TooltipTrigger asChild>
                 <Button 
@@ -664,38 +664,42 @@ export default function Home() {
                 </AlertDialogFooter>
               </AlertDialogContent>
             </AlertDialog>
+
+            {/* Round Selection Buttons - Cùng hàng bên phải, kích cỡ bằng nút chúc mừng */}
+            <div className="flex gap-2 ml-2">
+              {[1, 2, 3, 4].map((round) => (
+                <Tooltip key={round}>
+                  <TooltipTrigger asChild>
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        console.log('DIRECT BUTTON CLICKED for round:', round);
+                        handleRoundSwitch(round);
+                      }}
+                      className={`
+                        ${currentRound === round 
+                          ? 'bg-gradient-to-r from-yellow-500 to-amber-500 text-white shadow-lg scale-105' 
+                          : 'bg-white/80 border-2 border-white text-red-900 hover:bg-white'
+                        }
+                        font-bold text-base md:text-lg w-10 h-10 md:w-12 md:h-12 rounded-full transition-all duration-200 cursor-pointer relative flex items-center justify-center
+                      `}
+                      style={{ 
+                        fontFamily: "var(--font-display)",
+                        zIndex: 9999,
+                        position: 'relative'
+                      }}
+                    >
+                      {round}
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent>Vòng {round}</TooltipContent>
+                </Tooltip>
+              ))}
+            </div>
           </div>
         </header>
-
-        {/* Round Selection Buttons - Hình tròn nhỏ với số 1,2,3,4 */}
-        <div className="flex justify-center gap-3 mt-2 mb-2 relative z-[999]" style={{ zIndex: 9999 }}>
-          {[1, 2, 3, 4].map((round) => (
-            <button
-              key={round}
-              type="button"
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                console.log('DIRECT BUTTON CLICKED for round:', round);
-                handleRoundSwitch(round);
-              }}
-              className={`
-                ${currentRound === round 
-                  ? 'bg-gradient-to-r from-yellow-500 to-amber-500 text-white shadow-lg scale-110' 
-                  : 'bg-white/80 border-2 border-white text-red-900 hover:bg-white'
-                }
-                font-bold text-base md:text-lg w-10 h-10 md:w-12 md:h-12 rounded-full transition-all duration-200 cursor-pointer relative flex items-center justify-center
-              `}
-              style={{ 
-                fontFamily: "var(--font-display)",
-                zIndex: 9999,
-                position: 'relative'
-              }}
-            >
-              {round}
-            </button>
-          ))}
-        </div>
 
         {/* Main Game Area */}
         <div className="flex-1 flex flex-col gap-2 mt-2 min-h-0">

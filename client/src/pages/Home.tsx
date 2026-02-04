@@ -419,6 +419,13 @@ export default function Home() {
   const { playClickSound, playFireworkSound, playPrizeMusic } = useSound();
   const { toggleBackgroundMusic } = useBackgroundMusic();
 
+  // Save to localStorage whenever selectedNumbers changes
+  useEffect(() => {
+    if (!showIntro) {
+      saveRoundToStorage(currentRound, selectedNumbers);
+    }
+  }, [selectedNumbers, currentRound, showIntro]);
+
   // Handle starting the game from intro
   const handleStartGame = useCallback(() => {
     setShowIntro(false);
@@ -428,11 +435,6 @@ export default function Home() {
   if (showIntro) {
     return <IntroPage onStart={handleStartGame} />;
   }
-
-  // Save to localStorage whenever selectedNumbers changes
-  useEffect(() => {
-    saveRoundToStorage(currentRound, selectedNumbers);
-  }, [selectedNumbers, currentRound]);
 
   // Handle round switching
   const handleRoundSwitch = useCallback((round: number) => {

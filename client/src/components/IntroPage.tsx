@@ -52,11 +52,11 @@ export default function IntroPage({ onStart }: IntroPageProps) {
       />
 
       {/* Main content */}
-      <div className="relative z-20 flex-1 flex flex-col items-center justify-center px-4 py-6">
+      <div className="relative z-20 flex-1 flex flex-col items-center px-4 py-4">
         
-        {/* Header with logos */}
+        {/* Header with logos - nhỏ và lên trên */}
         <motion.div 
-          className="flex items-center justify-center gap-4 md:gap-8 mb-4"
+          className="flex items-center justify-center gap-4 mb-2"
           initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
@@ -64,56 +64,56 @@ export default function IntroPage({ onStart }: IntroPageProps) {
           <img 
             src="./images/logo.png" 
             alt="Hội An Hoa & Organic" 
-            className="h-14 md:h-20 lg:h-24 object-contain"
+            className="h-8 md:h-10 lg:h-12 object-contain"
           />
         </motion.div>
 
-        {/* Year End Party Title */}
+        {/* Year End Party Title - TO HƠN */}
         <motion.img 
           src="./images/chu.png" 
           alt="Year End Party" 
-          className="h-20 md:h-28 lg:h-36 object-contain mb-6"
+          className="h-28 md:h-40 lg:h-52 object-contain mb-4"
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.6, delay: 0.2 }}
         />
 
-        {/* Rules Card */}
+        {/* Rules Card - TO HƠN và là focus chính */}
         <motion.div 
-          className="w-full max-w-3xl"
+          className="w-full max-w-4xl flex-1 flex flex-col"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
         >
-          <div className="winner-board rounded-xl p-4 md:p-6 lg:p-8 bg-gradient-to-b from-red-900/95 to-red-950/98 border-2 border-yellow-500/60 shadow-2xl">
+          <div className="winner-board rounded-2xl p-6 md:p-8 lg:p-10 bg-gradient-to-b from-red-900/95 to-red-950/98 border-3 border-yellow-500/70 shadow-2xl flex-1 flex flex-col">
             {/* Title */}
             <h1 
-              className="golden-text text-2xl md:text-3xl lg:text-4xl font-bold text-center mb-4 md:mb-6"
+              className="golden-text text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-4 md:mb-6"
               style={{ fontFamily: "var(--font-display)" }}
             >
               LOTO TRÚNG THƯỞNG
             </h1>
             
             {/* Rules */}
-            <div className="space-y-3 md:space-y-4 text-yellow-100/90">
+            <div className="space-y-4 md:space-y-5 text-yellow-100/90 flex-1">
               <h2 
-                className="text-lg md:text-xl lg:text-2xl font-semibold text-yellow-400"
+                className="text-xl md:text-2xl lg:text-3xl font-semibold text-yellow-400"
                 style={{ fontFamily: "var(--font-display)" }}
               >
                 LUẬT CHƠI:
               </h2>
               
-              <ul className="space-y-2 md:space-y-3 text-sm md:text-base lg:text-lg" style={{ fontFamily: "var(--font-body)" }}>
-                <li className="flex items-start gap-2">
-                  <span className="text-yellow-400 mt-1">•</span>
+              <ul className="space-y-3 md:space-y-4 text-base md:text-lg lg:text-xl" style={{ fontFamily: "var(--font-body)" }}>
+                <li className="flex items-start gap-3">
+                  <span className="text-yellow-400 mt-1 text-xl">•</span>
                   <span>Mỗi người chơi nhận một tờ lô tô có các con số ngẫu nhiên.</span>
                 </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-yellow-400 mt-1">•</span>
+                <li className="flex items-start gap-3">
+                  <span className="text-yellow-400 mt-1 text-xl">•</span>
                   <span>MC sẽ bốc từng con số và đọc to.</span>
                 </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-yellow-400 mt-1">•</span>
+                <li className="flex items-start gap-3">
+                  <span className="text-yellow-400 mt-1 text-xl">•</span>
                   <span>Người chơi nào có đủ các số trên một hàng ngang trên tờ lô tô của mình sẽ hô "KINH" và là người chiến thắng.</span>
                 </li>
               </ul>
@@ -128,10 +128,10 @@ export default function IntroPage({ onStart }: IntroPageProps) {
             >
               <Button
                 onClick={onStart}
-                className="bg-gradient-to-r from-yellow-500 to-amber-500 hover:from-yellow-400 hover:to-amber-400 text-red-900 font-bold text-lg md:text-xl lg:text-2xl px-8 md:px-12 py-4 md:py-6 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 glow-animation"
+                className="bg-gradient-to-r from-yellow-500 to-amber-500 hover:from-yellow-400 hover:to-amber-400 text-red-900 font-bold text-xl md:text-2xl lg:text-3xl px-10 md:px-14 py-5 md:py-7 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 glow-animation"
                 style={{ fontFamily: "var(--font-display)" }}
               >
-                <Play className="w-6 h-6 md:w-8 md:h-8 mr-2" />
+                <Play className="w-7 h-7 md:w-9 md:h-9 mr-3" />
                 VÀO CHƠI
               </Button>
             </motion.div>

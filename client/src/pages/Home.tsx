@@ -667,8 +667,8 @@ export default function Home() {
           </div>
         </header>
 
-        {/* Round Selection Buttons */}
-        <div className="flex justify-center gap-3 mt-3 mb-2 relative z-[999]" style={{ zIndex: 9999 }}>
+        {/* Round Selection Buttons - Hình tròn nhỏ với số 1,2,3,4 */}
+        <div className="flex justify-center gap-3 mt-2 mb-2 relative z-[999]" style={{ zIndex: 9999 }}>
           {[1, 2, 3, 4].map((round) => (
             <button
               key={round}
@@ -681,10 +681,10 @@ export default function Home() {
               }}
               className={`
                 ${currentRound === round 
-                  ? 'bg-gradient-to-r from-yellow-500 to-amber-500 text-white shadow-lg scale-105' 
-                  : 'bg-white/80 border-2 border-white text-black hover:bg-white'
+                  ? 'bg-gradient-to-r from-yellow-500 to-amber-500 text-white shadow-lg scale-110' 
+                  : 'bg-white/80 border-2 border-white text-red-900 hover:bg-white'
                 }
-                font-bold text-sm md:text-base px-4 py-3 rounded-lg transition-all duration-200 cursor-pointer min-w-[80px] relative
+                font-bold text-base md:text-lg w-10 h-10 md:w-12 md:h-12 rounded-full transition-all duration-200 cursor-pointer relative flex items-center justify-center
               `}
               style={{ 
                 fontFamily: "var(--font-display)",
@@ -692,7 +692,7 @@ export default function Home() {
                 position: 'relative'
               }}
             >
-              Vòng {round}
+              {round}
             </button>
           ))}
         </div>

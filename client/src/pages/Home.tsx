@@ -6,6 +6,7 @@
 import { useState, useCallback, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { RotateCcw, Sparkles, Trophy, Volume2, VolumeX } from "lucide-react";
+import IntroPage from "@/components/IntroPage";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   AlertDialog,
@@ -408,6 +409,7 @@ const loadCurrentRound = (): number => {
 };
 
 export default function Home() {
+  const [showIntro, setShowIntro] = useState<boolean>(true);
   const [currentRound, setCurrentRound] = useState<number>(() => loadCurrentRound());
   const [selectedNumbers, setSelectedNumbers] = useState<number[]>(() => loadRoundFromStorage(loadCurrentRound()));
   const [flyingNumber, setFlyingNumber] = useState<number | null>(null);
@@ -416,6 +418,16 @@ export default function Home() {
   const [isMusicPlaying, setIsMusicPlaying] = useState(true); // Start as true for autoplay
   const { playClickSound, playFireworkSound, playPrizeMusic } = useSound();
   const { toggleBackgroundMusic } = useBackgroundMusic();
+
+  // Handle starting the game from intro
+  const handleStartGame = useCallback(() => {
+    setShowIntro(false);
+  }, []);
+
+  // If showing intro page, render it
+  if (showIntro) {
+    return <IntroPage onStart={handleStartGame} />;
+  }
 
   // Save to localStorage whenever selectedNumbers changes
   useEffect(() => {

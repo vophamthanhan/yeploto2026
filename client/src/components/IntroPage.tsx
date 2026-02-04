@@ -103,7 +103,7 @@ export default function IntroPage({ onStart }: IntroPageProps) {
                 LUẬT CHƠI:
               </h2>
               
-              <ul className="space-y-3 md:space-y-4 text-base md:text-lg lg:text-xl" style={{ fontFamily: "var(--font-body)" }}>
+              <ul className="space-y-3 md:space-y-4 text-lg md:text-xl lg:text-2xl" style={{ fontFamily: "var(--font-body)" }}>
                 <li className="flex items-start gap-3">
                   <span className="text-yellow-400 mt-1 text-xl">•</span>
                   <span>Mỗi người chơi nhận một tờ lô tô có các con số ngẫu nhiên.</span>

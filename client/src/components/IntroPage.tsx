@@ -15,7 +15,7 @@ export default function IntroPage({ onStart }: IntroPageProps) {
     <div 
       className="h-screen w-full relative overflow-hidden flex flex-col"
       style={{
-        backgroundImage: "url('./images/background-red.jpg')",
+        backgroundImage: "url('./images/background-hunghiephuy.jpg')",
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
@@ -23,87 +23,64 @@ export default function IntroPage({ onStart }: IntroPageProps) {
       {/* Overlay for better contrast */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/30 pointer-events-none" />
       
-      {/* Decorative lanterns */}
-      <img 
-        src="./images/longden.png" 
-        alt="Đèn lồng" 
-        className="absolute top-0 left-2 w-12 md:w-16 float-animation opacity-90 z-10 pointer-events-none"
-        style={{ animationDelay: "0s" }}
-      />
-      <img 
-        src="./images/longden.png" 
-        alt="Đèn lồng" 
-        className="absolute top-0 right-2 w-12 md:w-16 float-animation opacity-90 z-10 pointer-events-none"
-        style={{ animationDelay: "1.5s" }}
-      />
+      {/* Decorative lanterns - hidden as background has them */}
       
-      {/* Chùa Cầu Hội An - Left side */}
+      {/* Chùa Cầu Hội An - Left side - reduced */}
       <img 
         src="./images/chua-cau.png" 
         alt="Chùa Cầu Hội An" 
-        className="absolute bottom-0 left-0 h-[35%] opacity-70 z-10 pointer-events-none object-contain"
+        className="absolute bottom-0 left-0 h-[25%] md:h-[30%] opacity-25 z-10 pointer-events-none object-contain"
       />
       
-      {/* Cầu Rồng Đà Nẵng - Right side */}
+      {/* Cầu Rồng Đà Nẵng - Right side - reduced */}
       <img 
         src="./images/cau-rong.png" 
         alt="Cầu Rồng Đà Nẵng" 
-        className="absolute bottom-0 right-0 h-[35%] opacity-70 z-10 pointer-events-none object-contain"
+        className="absolute bottom-0 right-0 h-[25%] md:h-[30%] opacity-25 z-10 pointer-events-none object-contain"
       />
 
       {/* Main content */}
-      <div className="relative z-20 flex-1 flex flex-col items-center px-4 py-4 pb-8">
+      <div className="relative z-20 flex-1 flex flex-col items-center px-4 py-2 pb-6">
         
-        {/* Header with logos - TO 2 LẦN */}
-        <motion.div 
-          className="flex items-center justify-center gap-4 mb-3"
-          initial={{ opacity: 0, y: -30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-        >
-          <img 
-            src="./images/logo.png" 
-            alt="Hội An Hoa & Organic" 
-            className="h-16 md:h-20 lg:h-24 object-contain"
-          />
-        </motion.div>
+        {/* Header - hidden to not cover logo */}
+        <div className="h-4 md:h-6"></div>
 
-        {/* Year End Party Title - TĂNG 1.2 LẦN */}
+        {/* Year End Party Title - smaller to not cover logo */}
         <motion.img 
           src="./images/chu.png" 
           alt="Year End Party" 
-          className="h-[17rem] md:h-[22rem] lg:h-[29rem] object-contain mb-4"
+          className="h-24 md:h-32 lg:h-40 object-contain mb-3"
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.6, delay: 0.2 }}
         />
 
-        {/* Rules Card - TO HƠN và là focus chính, cao hơn và cách lề dưới xa hơn */}
+        {/* Rules Card - positioned lower to not cover center logo */}
         <motion.div 
-          className="w-full max-w-4xl flex-1 flex flex-col mb-8"
+          className="w-full max-w-3xl flex-1 flex flex-col justify-end mb-6"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
         >
-          <div className="winner-board rounded-2xl p-6 md:p-8 lg:p-10 bg-gradient-to-b from-red-900/95 to-red-950/98 border-3 border-yellow-500/70 shadow-2xl flex-1 flex flex-col">
+          <div className="winner-board rounded-2xl p-5 md:p-6 lg:p-8 bg-gradient-to-b from-red-900/95 to-red-950/98 border-3 border-yellow-500/70 shadow-2xl flex flex-col">
             {/* Title */}
             <h1 
-              className="golden-text text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-4 md:mb-6"
+              className="golden-text text-2xl md:text-3xl lg:text-4xl font-bold text-center mb-3 md:mb-4"
               style={{ fontFamily: "var(--font-display)" }}
             >
               LOTO TRÚNG THƯỞNG
             </h1>
             
             {/* Rules */}
-            <div className="space-y-4 md:space-y-5 text-yellow-100/90 flex-1">
+            <div className="space-y-2 md:space-y-3 text-yellow-100/90">
               <h2 
-                className="text-xl md:text-2xl lg:text-3xl font-semibold text-yellow-400"
+                className="text-lg md:text-xl lg:text-2xl font-semibold text-yellow-400"
                 style={{ fontFamily: "var(--font-display)" }}
               >
                 LUẬT CHƠI:
               </h2>
               
-              <ul className="space-y-3 md:space-y-4 text-lg md:text-xl lg:text-2xl" style={{ fontFamily: "var(--font-body)" }}>
+              <ul className="space-y-2 md:space-y-3 text-base md:text-lg lg:text-xl" style={{ fontFamily: "var(--font-body)" }}>
                 <li className="flex items-start gap-3">
                   <span className="text-yellow-400 mt-1 text-xl">•</span>
                   <span>Mỗi người chơi nhận một tờ vé có các con số ngẫu nhiên.</span>
@@ -125,17 +102,17 @@ export default function IntroPage({ onStart }: IntroPageProps) {
 
             {/* Start Button */}
             <motion.div 
-              className="mt-6 md:mt-8 flex justify-center"
+              className="mt-4 md:mt-6 flex justify-center"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.8 }}
             >
               <Button
                 onClick={onStart}
-                className="bg-gradient-to-r from-yellow-500 to-amber-500 hover:from-yellow-400 hover:to-amber-400 text-red-900 font-bold text-xl md:text-2xl lg:text-3xl px-10 md:px-14 py-5 md:py-7 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 glow-animation"
+                className="bg-gradient-to-r from-yellow-500 to-amber-500 hover:from-yellow-400 hover:to-amber-400 text-red-900 font-bold text-lg md:text-xl lg:text-2xl px-8 md:px-12 py-4 md:py-6 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 glow-animation"
                 style={{ fontFamily: "var(--font-display)" }}
               >
-                <Play className="w-7 h-7 md:w-9 md:h-9 mr-3" />
+                <Play className="w-6 h-6 md:w-8 md:h-8 mr-2" />
                 VÀO CHƠI
               </Button>
             </motion.div>

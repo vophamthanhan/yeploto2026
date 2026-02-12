@@ -57,30 +57,30 @@ export default function IntroPage({ onStart }: IntroPageProps) {
 
         {/* Rules Card - positioned lower to not cover center logo */}
         <motion.div 
-          className="w-full max-w-3xl flex-1 flex flex-col justify-end mb-6"
+          className="w-full max-w-4xl flex-1 flex flex-col justify-end mb-6"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
         >
-          <div className="winner-board rounded-2xl p-5 md:p-6 lg:p-8 bg-gradient-to-b from-red-900/95 to-red-950/98 border-3 border-yellow-500/70 shadow-2xl flex flex-col">
+          <div className="winner-board rounded-2xl p-6 md:p-8 lg:p-10 bg-gradient-to-b from-red-900/95 to-red-950/98 border-3 border-yellow-500/70 shadow-2xl flex flex-col">
             {/* Title */}
             <h1 
-              className="golden-text text-2xl md:text-3xl lg:text-4xl font-bold text-center mb-3 md:mb-4"
+              className="golden-text text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-4 md:mb-5"
               style={{ fontFamily: "var(--font-display)" }}
             >
               LOTO TRÚNG THƯỞNG
             </h1>
             
             {/* Rules */}
-            <div className="space-y-2 md:space-y-3 text-yellow-100/90">
+            <div className="space-y-3 md:space-y-4 text-yellow-100/90">
               <h2 
-                className="text-lg md:text-xl lg:text-2xl font-semibold text-yellow-400"
+                className="text-xl md:text-2xl lg:text-3xl font-semibold text-yellow-400"
                 style={{ fontFamily: "var(--font-display)" }}
               >
                 LUẬT CHƠI:
               </h2>
               
-              <ul className="space-y-2 md:space-y-3 text-base md:text-lg lg:text-xl" style={{ fontFamily: "var(--font-body)" }}>
+              <ul className="space-y-3 md:space-y-4 text-lg md:text-xl lg:text-2xl" style={{ fontFamily: "var(--font-body)" }}>
                 <li className="flex items-start gap-3">
                   <span className="text-yellow-400 mt-1 text-xl">•</span>
                   <span>Mỗi người chơi nhận một tờ vé có các con số ngẫu nhiên.</span>

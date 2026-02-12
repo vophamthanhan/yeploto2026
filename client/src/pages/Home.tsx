@@ -710,14 +710,14 @@ export default function Home() {
                       }}
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.9 }}
-                      className="w-20 h-20 md:w-24 md:h-24 lg:w-[115px] lg:h-[115px] rounded-full flex items-center justify-center flex-shrink-0 cursor-pointer"
+                      className="w-[104px] h-[104px] md:w-[125px] md:h-[125px] lg:w-[150px] lg:h-[150px] rounded-full flex items-center justify-center flex-shrink-0 cursor-pointer"
                       style={{
                         background: "linear-gradient(145deg, #ffd700 0%, #d4a574 50%, #a67c4a 100%)",
                         boxShadow: "0 0 15px rgba(255, 215, 0, 0.5), inset 0 -3px 10px rgba(0,0,0,0.3), inset 0 3px 10px rgba(255,255,255,0.3)"
                       }}
                     >
                       <span 
-                        className="text-red-900 font-bold text-2xl md:text-3xl lg:text-4xl"
+                        className="text-red-900 font-bold text-3xl md:text-4xl lg:text-5xl"
                         style={{ fontFamily: "var(--font-display)", textShadow: "0 1px 2px rgba(255,255,255,0.3)" }}
                       >
                         {num}

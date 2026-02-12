@@ -516,7 +516,7 @@ export default function Home() {
     <div 
       className="h-screen w-full relative overflow-hidden"
       style={{
-        backgroundImage: "url('./images/background-red.jpg')",
+        backgroundImage: "url('./images/background-hunghiephuy.jpg')",
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
@@ -532,44 +532,28 @@ export default function Home() {
       {/* Overlay for better contrast */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/20 pointer-events-none" />
       
-      {/* Chùa Cầu Hội An - Left side */}
+      {/* Chùa Cầu Hội An - Left side - reduced opacity */}
       <img 
         src="./images/chua-cau.png" 
         alt="Chùa Cầu Hội An" 
-        className="absolute bottom-0 left-0 h-[45%] opacity-85 z-10 pointer-events-none object-contain"
+        className="absolute bottom-0 left-0 h-[35%] md:h-[40%] opacity-30 z-10 pointer-events-none object-contain"
       />
       
-      {/* Cầu Rồng Đà Nẵng - Right side */}
+      {/* Cầu Rồng Đà Nẵng - Right side - reduced opacity */}
       <img 
         src="./images/cau-rong.png" 
         alt="Cầu Rồng Đà Nẵng" 
-        className="absolute bottom-0 right-0 h-[45%] opacity-85 z-10 pointer-events-none object-contain"
+        className="absolute bottom-0 right-0 h-[35%] md:h-[40%] opacity-30 z-10 pointer-events-none object-contain"
       />
       
-      {/* Decorative lanterns */}
-      <img 
-        src="./images/longden.png" 
-        alt="Đèn lồng" 
-        className="absolute top-0 left-2 w-12 md:w-16 float-animation opacity-90 z-10 pointer-events-none"
-        style={{ animationDelay: "0s" }}
-      />
-      <img 
-        src="./images/longden.png" 
-        alt="Đèn lồng" 
-        className="absolute top-0 right-2 w-12 md:w-16 float-animation opacity-90 z-10 pointer-events-none"
-        style={{ animationDelay: "1.5s" }}
-      />
+      {/* Decorative lanterns - hidden as background already has them */}
       
       {/* Main content */}
       <div className="relative z-20 h-full flex flex-col px-3 py-2">
         {/* Header with logos and Year End Party */}
         <header className="flex items-center justify-between gap-2">
-          {/* Left: Logo */}
-          <img 
-            src="./images/logo.png" 
-            alt="Hội An Hoa & Organic" 
-            className="h-12 md:h-16 lg:h-20 object-contain"
-          />
+          {/* Left: Logo - hidden as background has Hung Hiep Huy logo */}
+          <div className="h-12 md:h-16 lg:h-20 w-12 md:w-16 lg:w-20"></div>
           
           {/* Center: Year End Party - LARGE */}
           <img 
